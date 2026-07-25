@@ -9,7 +9,7 @@ function Header() {
         <div className="flex items-center gap-3">
           <Link href="/">
             <Image
-              src={"/logo.png"}
+              src={"/images/logo.png"}
               alt="logo"
               width={100}
               height={100}
