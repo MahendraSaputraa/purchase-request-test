@@ -1,4 +1,4 @@
-import { Trash, X } from "lucide-react";
+import { Trash } from "lucide-react";
 import type { Product } from "@/features/purchase-request/types";
 import { Button } from "@/components/ui/button";
 import { formatRupiah } from "@/lib/format-rupiah";

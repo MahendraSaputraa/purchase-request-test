@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { EmptyState } from "@/components/ui/empty-state";
 import { Pagination } from "@/components/ui/pagination";
@@ -8,7 +8,6 @@ import { ProductCard } from "@/features/purchase-request/components/product-card
 import type { Product } from "@/features/purchase-request/types";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { AvailabilityFilter, ProductFilters } from "./product-filters";
-import { LOW_STOCK_THRESHOLD } from "@/data/products";
 import { getStockStatus } from "@/lib/product";
 
 const PAGE_SIZE = 8;
@@ -29,6 +28,15 @@ function ProductCatalog({
 
   const [page, setPage] = useState(1);
 
+  const [prevFilters, setPrevFilters] = useState({ search, availability });
+  if (
+    prevFilters.search !== search ||
+    prevFilters.availability !== availability
+  ) {
+    setPrevFilters({ search, availability });
+    setPage(1);
+  }
+
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       const matchesSearch = product.name
@@ -43,9 +51,6 @@ function ProductCatalog({
       return matchesSearch && matchesAvailability;
     });
   }, [products, search, availability]);
-  useEffect(() => {
-    setPage(1);
-  }, [search, availability]);
 
   const totalPages = Math.max(
     1,
@@ -69,11 +74,11 @@ function ProductCatalog({
               onAvailabilityChange={setAvailability}
             />
           </div>
-          {products.length === 0 ? (
+          {filteredProducts.length === 0 ? (
             <EmptyState
               imageSrc="/images/shopping.png"
               title="Tidak ada produk yang ditemukan"
-              description="Silakan coba lagi nanti atau hubungi admin Head Office."
+              description="Coba kata kunci lain atau ubah filter ketersediaan."
             />
           ) : (
             <>

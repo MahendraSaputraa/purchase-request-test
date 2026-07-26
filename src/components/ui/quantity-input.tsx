@@ -31,40 +31,53 @@ function QuantityInput({
     onChange(clamp(parsed));
   };
 
-  const exceedsStock = value >= max;
+  const exceedsStock = max > 0 && value >= max;
 
   return (
-    <div className=" items-center rounded-md  ">
-      <Button
-        variant={"primary"}
-        onClick={handleDecrease}
-        disabled={disabled || value <= min}
-        aria-label={`Kurangi jumlah ${label}`}
-        className="h-8 px-2"
-      >
-        <Minus className="h-3.5 w-3.5" aria-hidden="true" />
-      </Button>
-      <input
-        type="text"
-        inputMode="numeric"
-        value={value}
-        onChange={handleInputChange}
-        disabled={disabled}
-        aria-label={`Jumlah ${label}`}
-        className={cn(
-          "h-8 w-10  bg-transparent text-center text-sm outline-none",
-          exceedsStock && "text-warning",
-        )}
-      />
-      <Button
-        variant={"primary"}
-        onClick={handleIncrease}
-        disabled={disabled || value >= max}
-        aria-label={`Tambah jumlah ${label}`}
-        className="h-8 px-2"
-      >
-        <Plus className="h-3.5 w-3.5" aria-hidden="true" />
-      </Button>
+    <div>
+      <div className="items-center rounded-md flex">
+        <Button
+          variant={"primary"}
+          onClick={handleDecrease}
+          disabled={disabled || value <= min}
+          aria-label={`Kurangi jumlah ${label}`}
+          className="h-8 px-2"
+        >
+          <Minus className="h-3.5 w-3.5" aria-hidden="true" />
+        </Button>
+        <input
+          type="text"
+          inputMode="numeric"
+          value={value}
+          onChange={handleInputChange}
+          disabled={disabled}
+          aria-label={`Jumlah ${label}`}
+          aria-describedby={exceedsStock ? `${label}-stock-hint` : undefined}
+          className={cn(
+            "h-8 w-10  bg-transparent text-center text-sm outline-none",
+            exceedsStock && "text-warning",
+          )}
+        />
+        <Button
+          variant={"primary"}
+          onClick={handleIncrease}
+          disabled={disabled || value >= max}
+          aria-label={`Tambah jumlah ${label}`}
+          className="h-8 px-2"
+        >
+          <Plus className="h-3.5 w-3.5" aria-hidden="true" />
+        </Button>
+      </div>
+
+      {exceedsStock && (
+        <p
+          id={`${label}-stock-hint`}
+          role="status"
+          className="mt-1 text-xs text-warning"
+        >
+          Maks. stok tersedia
+        </p>
+      )}
     </div>
   );
 }
