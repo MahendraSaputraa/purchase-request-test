@@ -39,7 +39,7 @@ function OrderHistoryList({ orders }: OrderHistoryListProps) {
                   {new Date(order.date).toLocaleDateString("id-ID", {
                     dateStyle: "long",
                   })}{" "}
-                  Â· {order.itemCount} item
+                  {order.itemCount} item
                 </p>
               </div>
               <div className="text-right">
