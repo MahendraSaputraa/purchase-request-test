@@ -69,7 +69,7 @@ function OrderSummaryFields({
             </ul>
           </div>
 
-          <div className="space-y-1.5 border-t border-border pt-3 text-sm">
+          <dl className="space-y-1.5 border-t border-border pt-3 text-sm">
             <div className="flex justify-between text-muted-foreground">
               <dt>Subtotal</dt>
               <dd>{formatRupiah(subtotal)}</dd>
@@ -98,7 +98,7 @@ function OrderSummaryFields({
               <dt>Total</dt>
               <dd>{formatRupiah(total)}</dd>
             </div>
-          </div>
+          </dl>
 
           <PaymentMethodSelector
             value={paymentMethod}
